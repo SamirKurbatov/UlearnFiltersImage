@@ -32,7 +32,7 @@ namespace Recognizer
             {
                 for (int j = 0; j < ySize; j++)
                 {
-                    (windowSizeX, windowSizeY) = GetWindowSizeOfPixel(i, j, original);
+                    (windowSizeX, windowSizeY) = GetWindowSizeOfPixel(i, j, original); 
 
                     var window = new double[windowSizeX, windowSizeY];
 
@@ -55,14 +55,21 @@ namespace Recognizer
                         }
                     }
 
-                    double result = ApplyMedianFilter(window);
+                    double filtredImage = ApplyMedianFilter(window);
 
-                    newImage[i, j] = result;
+                    newImage[i, j] = filtredImage;
                 }
             }
             return newImage;
         }
 
+        /// <summary>
+        /// Получение размера в зависимости от типа пикселя, граничный пиксель, угловой пиксель, неграничный пиксель
+        /// </summary>
+        /// <param name="i">Ширина</param>
+        /// <param name="j">Высота</param>
+        /// <param name="original">Сама фотография</param>
+        /// <returns>Размер пикселя и тип пикселя в зависимости от размера</returns>
         private static (int x, int y) GetWindowSizeOfPixel(int i, int j, double[,] original)
         {
             var xSize = original.GetLength(0);
@@ -78,6 +85,7 @@ namespace Recognizer
             {
                 return (x: 3, y: 2);
             }
+
             else
             {
                 return (x: 2, y: 2);
